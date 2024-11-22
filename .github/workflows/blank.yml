@@ -1,0 +1,20 @@
+name: Workflow Success Notification
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Send Slack notification on success
+        if: success()
+        uses: 8398a7/action-slack@v3
+        with:
+          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          message: "The workflow was successful!"
